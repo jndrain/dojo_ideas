@@ -1,0 +1,29 @@
+<h1>Hi, <%= @user.name %>!</h1>
+<form action = "/create" method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<input type='hidden' name='user_id' value='<%= session[:user_id] %>'>
+	<input type="text" name="content" value="Post something witty...">
+	<input type="submit" value="Idea">
+</form>
+<% @posts.each do |p| %>
+	<p><a href="/bright_ideas/<%= p.user.id%>"><%= p.user.alias %></a> says: <%= p.content %></p>
+	<% if p.users_liked.include?(@user) %>
+		<p>Already liked this post</p>
+	<% else %>
+		<form action='/likes' method='post'>
+			<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+			<input type='hidden' name='post_id' value='<%= p.id %>'>
+			<input type='submit' value='Like'>
+	 	</form>
+	 <% end %>
+ 	<p><a href="/bright_ideas/<%= p.id %>"><%= p.likes.count %> people</a> like this</p>
+ 	 <% if @user.id == p.user.id %>
+		<form action="/destroy/<%= p.id %>" method="post">
+			<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+			<input type='hidden' name='_method' value='delete'>
+			<input type="submit" value="Delete Post">
+		</form>
+	<% end %>
+<% end %>
+
+

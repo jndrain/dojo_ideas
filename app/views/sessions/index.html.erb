@@ -1,0 +1,28 @@
+<% if flash && flash[:errors] %>
+	<h4><%= flash[:errors] %></h4>
+<% end %>
+
+<h1>Welcome!</h1>
+<h1>Register</h1>
+<form action="/register" method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<p>Name:<input type="text" name="name"></p>
+	<p>Alias:<input type="text" name="alias"></p>
+	<p>Email:<input type="text" name="email"></p>
+	<p>Password:<input type="text" name="password"></p>
+	<p>*Password should be at least 8 characters</p>
+	<p>Confirm PW:<input type="text" name="confirm_pw"></p>
+	<input type="submit" value="Register">
+</form>
+
+<h1>Login</h1>
+<form action="/login" method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<p>Email:<input type="text" name="email"></p>
+	<p>Password:<input type="text" name="password"></p>
+	<input type="submit" value="Login">
+</form>
+
+
+
+
